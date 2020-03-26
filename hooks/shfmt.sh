@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Original: https://github.com/jumanjihouse/pre-commit-hooks#shfmt
 # Forked to change runtime to /usr/bin/env on win10
-set -eu
+
 
 readonly DEBUG=${DEBUG:-unset}
 if [ "${DEBUG}" != unset ]; then
