@@ -13,10 +13,6 @@ if ! command -v shfmt >/dev/null 2>&1; then
   exit 1
 fi
 
-readonly cmd=(shfmt "$@")
-echo "[RUN] ${cmd[@]}"
-output="$("${cmd[@]}" 2>&1)"
-readonly output
 
 while IFS= read -r -d '' file
 do
