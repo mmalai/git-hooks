@@ -17,7 +17,7 @@ fi
 while IFS= read -r -d '' file
 do
   (( count++ ))
-  output="$(shfmt -l -i 4 -ci "$file")"
+  output="$(shfmt -l -d -i 4 -ci "$file")"
 done <   <(find . -type f -name "*.sh" -print0)
 
 
@@ -27,7 +27,7 @@ if [ -n "${output}" ]; then
   echo "${output}"
   echo
   echo 'The above files have style errors.'
-  echo 'Use "shfmt -d" option to show diff.'
+  echo 'Use "shfmt -l -d -i 4 -ci" option to show diff.'
   echo 'Use "shfmt -l -i 4 -ci -w" option to write (autocorrect).'
   exit 1
 else
