@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Original: https://github.com/jumanjihouse/pre-commit-hooks#shfmt
 # Forked to change runtime to /usr/bin/env on win10
-
+set -eu
 
 readonly DEBUG=${DEBUG:-unset}
 if [ "${DEBUG}" != unset ]; then
@@ -13,13 +13,10 @@ if ! command -v shfmt >/dev/null 2>&1; then
   exit 1
 fi
 
-
-while IFS= read -r -d '' file
-do
-  (( count++ ))
-  output="$(shfmt -l -d -i 4 -ci "$file")"
-done <   <(find . -type f -name "*.sh" -print0)
-
+readonly cmd=(shfmt "$@")
+echo "[RUN] ${cmd[@]}"
+output="$("${cmd[@]}" 2>&1)"
+readonly output
 
 if [ -n "${output}" ]; then
   echo '[FAIL]'
@@ -27,8 +24,8 @@ if [ -n "${output}" ]; then
   echo "${output}"
   echo
   echo 'The above files have style errors.'
-  echo 'Use "shfmt -l -d -i 4 -ci" option to show diff.'
-  echo 'Use "shfmt -l -i 4 -ci -w" option to write (autocorrect).'
+  echo 'Use "shfmt -d $@" option to show diff.'
+  echo 'Use "shfmt -w $@" option to write (autocorrect).'
   exit 1
 else
   echo '[PASS]'
